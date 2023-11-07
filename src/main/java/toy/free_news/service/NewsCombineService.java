@@ -9,14 +9,15 @@ import toy.free_news.util.Converter;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CombineService {
+public class NewsCombineService {
 
     private final NewsService newsService;
+
+    private final MemberService memberService;
 
     private final Converter converter;
 
     public void saveNews(NewsDto newsDto){
-
-        newsService.saveNews(converter.toNewsEntity(newsDto));
+        newsService.saveNews(converter.toNewsEntity(memberService.findMemberById(newsDto.getMemberId()), newsDto));
     }
 }

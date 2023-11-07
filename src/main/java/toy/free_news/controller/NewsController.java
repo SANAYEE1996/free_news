@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import toy.free_news.dto.NewsDto;
-import toy.free_news.service.CombineService;
+import toy.free_news.service.NewsCombineService;
 import toy.free_news.util.ResponseDto;
 
 @Slf4j
@@ -14,12 +14,12 @@ import toy.free_news.util.ResponseDto;
 @RequestMapping("/news")
 public class NewsController {
 
-    private final CombineService combineService;
+    private final NewsCombineService newsCombineService;
 
     @PostMapping(value = "/save")
     public ResponseDto save(@RequestBody @Valid NewsDto newsDto){
         try {
-            combineService.saveNews(newsDto);
+            newsCombineService.saveNews(newsDto);
         }catch (RuntimeException e){
             log.error(e.getMessage());
             return ResponseDto.builder().message(e.getMessage()).build();
