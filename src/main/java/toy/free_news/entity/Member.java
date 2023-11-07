@@ -1,8 +1,13 @@
 package toy.free_news.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "member")
 @Getter
@@ -21,4 +26,13 @@ public class Member {
 
     @Column(name = "name")
     private String name;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    private List<String> roles = new ArrayList<>();
+
+    public Member(String email, String password, String name) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+    }
 }
