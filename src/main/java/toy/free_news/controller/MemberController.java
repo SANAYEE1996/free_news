@@ -35,7 +35,7 @@ public class MemberController {
     @PostMapping(value = "/login")
     public ResponseDto login(@RequestBody @Valid LoginDto loginDto){
         try {
-            return ResponseDto.builder().body(new ResponseBody<>(memberService.login(loginDto.getEmail(), loginDto.getPassword()))) .message("join success").build();
+            return ResponseDto.builder().body(new ResponseBody<>(memberService.login(loginDto.getEmail(), loginDto.getPassword()))) .message("login success").build();
         }catch (RuntimeException e){
             log.error(e.getMessage());
             return ResponseDto.builder().message(e.getMessage()).build();
