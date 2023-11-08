@@ -19,7 +19,19 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public List<Comment> findCommentByNewsId(Long newsId){
+    public void update(String text, String modifyDate, Long id){
+        commentRepository.updateCommentInfo(text, modifyDate, id);
+    }
+
+    public void delete(Long id){
+        commentRepository.deleteCommentInfoById(id);
+    }
+
+    public List<Comment> findCommentListByNewsId(Long newsId){
         return commentRepository.findCommentListByNewsId(newsId);
+    }
+
+    public boolean isCommentIdExists(Long id){
+        return commentRepository.existsById(id);
     }
 }
