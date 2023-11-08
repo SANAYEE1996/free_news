@@ -68,7 +68,7 @@ public class NewsController {
         try {
             return ResponseDto.builder()
                     .body(new ResponseBody<>(newsCombineService.getNewsList(newsRequestDto)))
-                    .message("news detail get success")
+                    .message("news list get success")
                     .build();
         }catch (RuntimeException e){
             log.error(e.getMessage());

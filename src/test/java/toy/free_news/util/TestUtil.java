@@ -36,7 +36,9 @@ public class TestUtil {
                         .content(objectMapper.writeValueAsString(new LoginDto(id,pw))))
                 .andReturn().getResponse().getContentAsString();
 
-        String token = new JSONObject(result).getString("accessToken");
+        String body = new JSONObject(result).getString("body");
+        String data = new JSONObject(body).getString("data");
+        String token = new JSONObject(data).getString("accessToken");
 
         return MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(documentationConfiguration(restDocumentation))
                 .defaultRequest(get("/").header(HttpHeaders.AUTHORIZATION, "Bearer " + token))
