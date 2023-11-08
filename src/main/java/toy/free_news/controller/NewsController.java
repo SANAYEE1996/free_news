@@ -21,12 +21,11 @@ public class NewsController {
     @PostMapping(value = "/save")
     public ResponseDto save(@RequestBody @Valid NewsDto newsDto){
         try {
-            newsCombineService.saveNews(newsDto);
+            return ResponseDto.builder().body(new ResponseBody<>(newsCombineService.saveNews(newsDto))).message("news save success").build();
         }catch (RuntimeException e){
             log.error(e.getMessage());
             return ResponseDto.builder().message(e.getMessage()).build();
         }
-        return ResponseDto.builder().message("news save success").build();
     }
 
     @PostMapping(value = "/update")
@@ -69,7 +68,7 @@ public class NewsController {
         try {
             return ResponseDto.builder()
                     .body(new ResponseBody<>(newsCombineService.getNewsList(newsRequestDto)))
-                    .message("news detail get success")
+                    .message("news list get success")
                     .build();
         }catch (RuntimeException e){
             log.error(e.getMessage());

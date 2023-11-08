@@ -16,8 +16,8 @@ public class NewsService {
 
     private final NewsRepository newsRepository;
 
-    public void saveNews(News news){
-        newsRepository.save(news);
+    public Long saveNews(News news){
+        return newsRepository.save(news).getId();
     }
 
     public void updateNews(String title, String text, String date, Long id){

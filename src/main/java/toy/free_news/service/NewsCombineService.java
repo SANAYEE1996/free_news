@@ -23,40 +23,40 @@ public class NewsCombineService {
 
     private final Converter converter;
 
-    public void saveNews(NewsDto newsDto){
-        newsService.saveNews(converter.toNewsEntity(memberService.findMemberById(newsDto.getMemberId()), newsDto));
+    public Long saveNews(NewsDto newsDto){
+        return newsService.saveNews(converter.toNewsEntity(memberService.findMemberById(newsDto.getMemberId()), newsDto));
     }
 
     public void updateNews(NewsDto newsDto){
-        if(isNewsIdValidate(newsDto.getId())){
+        if(isNewsIdNotValidate(newsDto.getId())){
             throw new RuntimeException("news id is not validate");
         }
         newsService.updateNews(newsDto.getTitle(), newsDto.getText(), LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS")), newsDto.getId());
     }
 
     public void deleteNews(NewsRequestDto newsRequestDto){
-        if(isNewsIdValidate(newsRequestDto.getId())){
+        if(isNewsIdNotValidate(newsRequestDto.getId())){
             throw new RuntimeException("news id is not validate");
         }
         newsService.deleteNews(newsRequestDto.getId());
     }
 
     public NewsDto getNewsDetail(NewsRequestDto newsRequestDto){
-        if(isNewsIdValidate(newsRequestDto.getId())){
+        if(isNewsIdNotValidate(newsRequestDto.getId())){
             throw new RuntimeException("news id is not validate");
         }
         return converter.toNewsDto(newsService.getNews(newsRequestDto.getId()));
     }
 
     public List<NewsDto> getNewsList(NewsRequestDto newsRequestDto){
-        if(isNewsIdValidate(newsRequestDto.getId())){
-            throw new RuntimeException("news id is not validate");
-        }
         return converter.toNewsDtoList(newsService.getNewsList(PageRequest.of(newsRequestDto.getPageNumber(),10)));
     }
 
-    private boolean isNewsIdValidate(Long id){
-        if(id == null) return false;
-        return newsService.newsIdExists(id);
+    private boolean isNewsIdNotValidate(Long id){
+        if(id == null) {
+            log.error("id is null");
+            return false;
+        }
+        return !newsService.newsIdExists(id);
     }
 }
