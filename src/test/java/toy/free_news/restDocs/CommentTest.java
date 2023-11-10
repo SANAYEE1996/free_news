@@ -14,8 +14,8 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import toy.free_news.dto.CommentDto;
 import toy.free_news.dto.CommentRequestDto;
-import toy.free_news.dto.NewsDto;
 import toy.free_news.util.TestUtil;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -49,9 +49,9 @@ public class CommentTest {
     @Test
     void saveTest() throws Exception {
 
-        NewsDto newsDto = new NewsDto(null, 1L, "속보3", "낚시3", "","");
+        CommentDto commentDto = new CommentDto(null, 1L, 1L, "박영상", "저기요", "", "");
 
-        String content = objectMapper.writeValueAsString(newsDto);
+        String content = objectMapper.writeValueAsString(commentDto);
 
         mockMvc.perform(post("/comment/save").contentType(MediaType.APPLICATION_JSON).content(content))
                 .andDo(document("comment/save",
@@ -66,9 +66,9 @@ public class CommentTest {
     @Test
     void updateTest() throws Exception {
 
-        NewsDto newsDto = new NewsDto(6L, 1L, "스피커는 멋져", "두둥두둥", "","");
+        CommentDto commentDto = new CommentDto(5L, 1L, 1L, "박영상", "수정 !", "", "");
 
-        String content = objectMapper.writeValueAsString(newsDto);
+        String content = objectMapper.writeValueAsString(commentDto);
 
         mockMvc.perform(post("/comment/update").contentType(MediaType.APPLICATION_JSON).content(content))
                 .andDo(document("comment/update",
@@ -83,9 +83,9 @@ public class CommentTest {
     @Test
     void deleteTest() throws Exception {
 
-        CommentRequestDto requestDto = new CommentRequestDto(0L, 0L, 0);
+        CommentRequestDto commentRequestDto = new CommentRequestDto(7L, 0L, 0);
 
-        String content = objectMapper.writeValueAsString(requestDto);
+        String content = objectMapper.writeValueAsString(commentRequestDto);
 
         mockMvc.perform(post("/comment/delete").contentType(MediaType.APPLICATION_JSON).content(content))
                 .andDo(document("comment/delete",
@@ -100,9 +100,9 @@ public class CommentTest {
     @Test
     void listTest() throws Exception {
 
-        CommentRequestDto requestDto = new CommentRequestDto(0L, 0L, 0);
+        CommentRequestDto commentRequestDto = new CommentRequestDto(0L, 1L, 0);
 
-        String content = objectMapper.writeValueAsString(requestDto);
+        String content = objectMapper.writeValueAsString(commentRequestDto);
 
         mockMvc.perform(post("/comment/list").contentType(MediaType.APPLICATION_JSON).content(content))
                 .andDo(document("comment/list",
