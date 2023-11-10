@@ -31,7 +31,7 @@ public class CommentCombineService {
         News news = newsService.getNews(commentDto.getNewsId());
         Member member = memberService.findMemberById(commentDto.getMemberId());
         String registerDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SS"));
-        commentService.save(new Comment(0L, news, member, member.getName(), commentDto.getText(), registerDate, ""));
+        commentService.save(new Comment(0L, news, member, member.getName(), commentDto.getText(), registerDate, null));
     }
 
     public void updateComment(CommentDto commentDto){
