@@ -2,8 +2,10 @@ package toy.free_news.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import toy.free_news.entity.Comment;
+import toy.free_news.entity.News;
 import toy.free_news.repository.CommentRepository;
 
 import java.util.List;
@@ -27,8 +29,8 @@ public class CommentService {
         commentRepository.deleteCommentInfoById(id);
     }
 
-    public List<Comment> findCommentListByNewsId(Long newsId){
-        return commentRepository.findCommentListByNewsId(newsId);
+    public List<Comment> findCommentList(News news, PageRequest pageRequest){
+        return commentRepository.findByNewsOrderByRegisterDate(news, pageRequest).toList();
     }
 
     public boolean isCommentIdExists(Long id){

@@ -2,6 +2,7 @@ package toy.free_news.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import toy.free_news.dto.CommentDto;
 import toy.free_news.dto.CommentRequestDto;
@@ -50,10 +51,8 @@ public class CommentCombineService {
     }
 
     public List<CommentDto> getCommentList(CommentRequestDto commentRequestDto){
-        if(!newsService.newsIdExists(commentRequestDto.getNewsId())){
-            throw new RuntimeException("News Id is Not exists id");
-        }
-        return converter.toCommentDtoList(commentService.findCommentListByNewsId(commentRequestDto.getNewsId()));
+        News news = newsService.getNews(commentRequestDto.getNewsId());
+        return converter.toCommentDtoList(commentService.findCommentList(news, PageRequest.of(commentRequestDto.getPageNumber(),10)));
     }
 
     private boolean isCommentIdNotValidate(Long id){
