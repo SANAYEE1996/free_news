@@ -53,7 +53,7 @@ public class CommentServiceTest {
         CommentRequestDto commentRequestDto = new CommentRequestDto(0L, 1L, 0);
         List<CommentDto> commentDtoList = commentCombineService.getCommentList(commentRequestDto);
         commentDtoList.stream()
-                .map(e->"text : " +e.getText()+ " name : "+e.getMemberName())
+                .map(e->"text : " +e.getText()+ " name : "+e.getMemberName() +" register date : "+e.getRegisterDate())
                 .forEach(System.out::println);
     }
 }
