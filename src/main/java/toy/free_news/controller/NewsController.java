@@ -13,6 +13,7 @@ import toy.free_news.util.ResponseDto;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/news")
 public class NewsController {
 
