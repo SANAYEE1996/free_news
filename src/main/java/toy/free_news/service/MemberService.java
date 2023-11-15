@@ -41,6 +41,7 @@ public class MemberService {
     public TokenInfo login(String email, String password) throws RuntimeException{
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        return jwtTokenProvider.generateToken(authentication);
+        Long memberId = memberRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("not enrolled email")).getId();
+        return jwtTokenProvider.generateToken(authentication, memberId);
     }
 }

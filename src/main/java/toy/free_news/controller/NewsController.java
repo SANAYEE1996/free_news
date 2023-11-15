@@ -25,7 +25,7 @@ public class NewsController {
             return ResponseDto.builder().body(new ResponseBody<>(newsCombineService.saveNews(newsDto))).message("news save success").build();
         }catch (RuntimeException e){
             log.error(e.getMessage());
-            return ResponseDto.builder().message(e.getMessage()).build();
+            return ResponseDto.builder().code(404).message(e.getMessage()).build();
         }
     }
 
